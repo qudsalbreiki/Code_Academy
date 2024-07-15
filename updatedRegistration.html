@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Code Academy Courses Registration Form</title>
+    <link rel="stylesheet" href="styleForm.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body lang="en">
+    <div class="container">
+        <div class="title">
+            <img src="CodeAcademyLogo.png" alt="the_logo">
+            <span id="form-title">Code Academy Courses Registration Form</span>
+        </div>
+        <div class="language-selector language-selector-right" id="language-selector">
+            <label for="language-select" id="language-label">Language:</label>
+            <select id="language-select" onchange="changeLanguage()">
+                <option value="en" selected>English</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+        <div class="content">
+            <form method="post">
+                <!--{% csrf_token %}-->
+                <div class="user-details">
+                    <div class="subdatails">
+                        <div class="subTitle" id="course-info">
+                            Course <span style="color: #F64B7D;" id="course-info-span">Information</span>
+                            <hr style="margin-left: 225px;" />
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="select-course">Select the Course</span>
+                            <select name="course" id="course-select" required>
+                                <option value="" disabled selected>The course</option>
+                                {% for course in courses %}
+                                <option value="{{ course.id }}">
+                                    {{ course.name }} - {{ course.price }} OMR
+                                </option>
+                                {% endfor %}
+                            </select>   
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="discount-code">Discount Code</span>
+                            <input type="text" name="discount_code" placeholder="The Discount Code" />
+                        </div>
+                    </div>
+
+                    <div class="subdatails">
+                        <div class="subTitle" id="personal-info">
+                            Personal <span style="color: #F64B7D;" id="personal-info-span">Information</span>
+                            <hr style="margin-left: 245px;" />
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="full-name">Full Name</span>
+                            <input type="text" name="full_name" placeholder="Your full name" required />
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="category">Select the Category</span>
+                            <select name="category" class="course-select" required>
+                                <option value="" disabled selected>The Category</option>
+                                <option value="freelancer">Freelancer</option>
+                                <option value="employee">Employee</option>
+                                <option value="job_seeker">Job Seeker</option>
+                                <option value="student">University/College Student</option>
+                                <option value="passionate">Passionate</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="email">Email</span>
+                            <input type="email" name="email" placeholder="email@gmail.com" required />
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="gender">Gender</span>
+                            <select name="gender" class="course-select" required>
+                                <option value="" disabled selected>Gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                            </select>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="phone-number">Phone Number</span>
+                            <input type="text" name="phone_number" placeholder="+968 00000000" required />
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details" id="civil-id">Civil/Resident ID</span>
+                            <input type="text" name="civil_id" placeholder="Enter your Civil/Resident ID" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Pay to complete the Registration" id="submit-button" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                formTitle: "Code Academy Courses Registration Form",
+                courseInfo: "Course",
+                courseInfoSpan: "Information",
+                selectCourse: "Select the Course",
+                discountCode: "Discount Code",
+                personalInfo: "Personal",
+                personalInfoSpan: "Information",
+                fullName: "Full Name",
+                category: "Select the Category",
+                email: "Email",
+                gender: "Gender",
+                phoneNumber: "Phone Number",
+                civilId: "Civil/Resident ID",
+                submitButton: "Pay to complete the Registration",
+                languageLabel: "Language:",
+                placeholders: {
+                    fullName: "Your full name",
+                    discountCode: "The Discount Code",
+                    phoneNumber: "+968 00000000",
+                    civilId: "Enter your Civil/Resident ID",
+                    email: "email@gmail.com"
+                }
+            },
+            ar: {
+                formTitle: "نموذج تسجيل دورات أكاديمية البرمجة",
+                courseInfo: "معلومات",
+                courseInfoSpan: "الدورة",
+                selectCourse: "اختر الدورة",
+                discountCode: "كود الخصم",
+                personalInfo: "معلومات",
+                personalInfoSpan: "شخصية",
+                fullName: "الاسم الكامل",
+                category: "اختر الفئة",
+                email: "البريد الإلكتروني",
+                gender: "الجنس",
+                phoneNumber: "رقم الهاتف",
+                civilId: "الهوية المدنية/الإقامة",
+                submitButton: "ادفع لإكمال التسجيل",
+                languageLabel: "اللغة:",
+                placeholders: {
+                    fullName: "ادخل الاسم الكامل",
+                    discountCode: "كود الخصم",
+                    phoneNumber: "+968 00000000",
+                    civilId: "أدخل هويتك المدنية/الإقامة",
+                    email: "البريد الإلكتروني"
+                }
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById("language-select").value;
+            document.body.setAttribute("lang", lang);
+            const languageSelector = document.getElementById("language-selector");
+            if (lang === "ar") {
+                languageSelector.classList.remove("language-selector-right");
+                languageSelector.classList.add("language-selector-left");
+            } else {
+                languageSelector.classList.remove("language-selector-left");
+                languageSelector.classList.add("language-selector-right");
+            }
+            document.getElementById("language-label").innerText = translations[lang].languageLabel;
+            document.getElementById("form-title").innerText = translations[lang].formTitle;
+            document.getElementById("course-info").innerHTML = `${translations[lang].courseInfo} <span style="color: #F64B7D;" id="course-info-span">${translations[lang].courseInfoSpan}</span>`;
+            document.getElementById("select-course").innerText = translations[lang].selectCourse;
+            document.getElementById("discount-code").innerText = translations[lang].discountCode;
+            document.getElementById("personal-info").innerHTML = `${translations[lang].personalInfo} <span style="color: #F64B7D;" id="personal-info-span">${translations[lang].personalInfoSpan}</span>`;
+            document.getElementById("full-name").innerText = translations[lang].fullName;
+            document.getElementById("category").innerText = translations[lang].category;
+            document.getElementById("email").innerText = translations[lang].email;
+            document.getElementById("gender").innerText = translations[lang].gender;
+            document.getElementById("phone-number").innerText = translations[lang].phoneNumber;
+            document.getElementById("civil-id").innerText = translations[lang].civilId;
+            document.getElementById("submit-button").value = translations[lang].submitButton;
+
+            // Update input placeholders
+            document.querySelector('input[name="full_name"]').placeholder = translations[lang].placeholders.fullName;
+            document.querySelector('input[name="discount_code"]').placeholder = translations[lang].placeholders.discountCode;
+            document.querySelector('input[name="phone_number"]').placeholder = translations[lang].placeholders.phoneNumber;
+            document.querySelector('input[name="civil_id"]').placeholder = translations[lang].placeholders.civilId;
+            document.querySelector('input[name="email"]').placeholder = translations[lang].placeholders.email;
+
+            // Update category options
+            const categorySelect = document.querySelector('select[name="category"]');
+            categorySelect.innerHTML = lang === "en" ? `
+                <option value="" disabled selected>The Category</option>
+                <option value="freelancer">Freelancer</option>
+                <option value="employee">Employee</option>
+                <option value="job_seeker">Job Seeker</option>
+                <option value="student">University/College Student</option>
+                <option value="passionate">Passionate</option>
+            ` : `
+                <option value="" disabled selected>اختر الفئة</option>
+                <option value="freelancer">مستقل</option>
+                <option value="employee">موظف</option>
+                <option value="job_seeker">باحث عن عمل</option>
+                <option value="student">طالب جامعي/كلية</option>
+                <option value="passionate">شغف</option>
+            `;
+
+            // Update gender options
+            const genderSelect = document.querySelector('select[name="gender"]');
+            genderSelect.innerHTML = lang === "en" ? `
+                <option value="" disabled selected>Gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+            ` : `
+                <option value="" disabled selected>الجنس</option>
+                <option value="Female">أنثى</option>
+                <option value="Male">ذكر</option>
+            `;
+        }
+    </script>
+</body>
+</html>

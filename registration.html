@@ -1,0 +1,146 @@
+<!--{% load static %}-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code Academy Courses Registration Form</title>
+    <link rel="stylesheet" href='styleForm.css'  />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .course-price {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <img src="CodeAcademyLogo.png" alt="the_logo">
+        <span>Code Academy Courses Registration Form</span>
+      </div>
+
+      <div class="content">
+        
+        <form method="post">
+          <!--{% csrf_token %}-->
+          <div class="user-details">
+
+            <div class="subdatails"> 
+                <div class="subTitle" >
+                    Course  <span style="color: #F64B7D;" > Information </span>
+                    <hr style=" margin-left: 225px; "/>
+                </div>
+                
+                <div class="input-box">
+                    <span class="details">Select the Course</span>
+                    <select name="course" id="course-select" required>
+                      <option value="" disabled selected>The course</option>
+                      {% for course in courses %}
+                      <option value="{{ course.id }}">
+                        {{ course.name }} - {{ course.price }} OMR
+                      </option>
+                      {% endfor %}
+                    </select>
+                    <div id="course-price" class="course-price"></div>
+                </div>                  
+
+                <div class="input-box">
+                  <span class="details">Discount Code</span>
+                  <input
+                    type="text"
+                    name="discount_code"
+                    placeholder="The Discount Code"
+                  />
+              </div>
+            </div>
+
+            <div class="subdatails"> 
+                <div class="subTitle" >
+                    Personal <span style="color: #F64B7D;" > Information </span>
+                    <hr style="margin-left: 245px;"/>
+                </div>                
+                
+                <div class="input-box">
+                    <span class="details">Full Name</span>
+                    <input
+                      type="text"
+                      name="full_name"
+                      placeholder="Your full name"
+                      required
+                    />
+                </div>
+
+                <div class="input-box">
+                  <span class="details">Select the Category</span>
+                  <select name="category" class="course-select" required>
+                    <option value="" disabled selected>The Category</option>
+                    <option value="freelancer">Freelancer</option>
+                    <option value="employee">Employee</option>
+                    <option value="job_seeker">Job Seeker</option>
+                    <option value="student">University/College Student</option>
+                    <option value="passionate">Passionate</option>
+                  </select>
+                </div>
+      
+                <div class="input-box">
+                  <span class="details">Email</span>
+                  <input
+                      type="email"
+                      name="email"
+                      placeholder="email@gmail.com "
+                      required
+                    />
+                  </div>            
+                  
+                  <div class="input-box">
+                    <span class="details">Gender</span>
+                    <select name="gender" class="course-select" required>
+                      <option value="" disabled selected>Gender</option>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                    </select>
+                  </div>            
+                  
+                  <div class="input-box" >
+                      <span class="details">Phone Number</span>
+                      <input
+                        type="text"
+                        name="phone_number"
+                        placeholder="+968 00000000"
+                        required
+                      />
+                  </div>
+      
+                  <div class="input-box" >
+                      <span class="details">Civil/Resident ID</span>
+                      <input
+                        type="text"
+                        name="civil_id"
+                        placeholder="Enter your Civil/Resident ID"
+                        required
+                      />
+                  </div>
+            </div>
+  
+          </div>
+          <div class="button">
+            <input type="submit" value="Pay to complete the Registration" />
+          </div>
+          
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("course-select")
+        .addEventListener("change", function () {
+          var selectedOption = this.options[this.selectedIndex];
+          var coursePrice = selectedOption.text.split(" - ")[1];
+          document.getElementById("course-price").innerText =
+            "Price: " + coursePrice;
+        });
+    </script>
+  </body>
+</html>
