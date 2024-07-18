@@ -9,28 +9,28 @@
 <body lang="en">
     <div class="container">
         <div class="title">
-            <img src="CodeAcademyLogo.png" alt="the_logo">
-            <span id="form-title">Code Academy Courses Registration Form</span>
+            <img src="CodeAcademyLogo.png" alt="the_logo" id="logo">
+            <span id="form-title" class="fade visible">Code Academy Courses Registration Form</span>
         </div>
         <div class="language-selector language-selector-right" id="language-selector">
-            <label for="language-select" id="language-label">Language:</label>
-            <select id="language-select" onchange="changeLanguage()">
-                <option value="en" selected>English</option>
-                <option value="ar">العربية</option>
-            </select>
+            <div class="language-dropdown">
+                <img src="languageIcon.png" alt="Language" id="language-icon">
+                <div class="language-dropdown-content">
+                    <a href="#" onclick="changeLanguage('en')">English</a>
+                    <a href="#" onclick="changeLanguage('ar')">العربية</a>
+                </div>
+            </div>
         </div>
         <div class="content">
             <form method="post">
-                <!--{% csrf_token %}-->
                 <div class="user-details">
-                    <div class="subdatails">
-                        <div class="subTitle" id="course-info">
+                    <div class="subdetails">
+                        <div class="subTitle fade visible" id="course-info">
                             Course <span style="color: #F64B7D;" id="course-info-span">Information</span>
                             <hr style="margin-left: 225px;" />
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="select-course">Select the Course</span>
+                            <span class="details fade visible" id="select-course">Select the Course</span>
                             <select name="course" id="course-select" required>
                                 <option value="" disabled selected>The course</option>
                                 {% for course in courses %}
@@ -38,28 +38,33 @@
                                     {{ course.name }} - {{ course.price }} OMR
                                 </option>
                                 {% endfor %}
-                            </select>   
+                            </select>
+                            <div id="course-price" class="course-price"></div>
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="discount-code">Discount Code</span>
+                            <span class="details fade visible" id="discount-code">Discount Code</span>
                             <input type="text" name="discount_code" placeholder="The Discount Code" />
                         </div>
+                        <div class="input-box">
+                            <span class="details fade visible" id="payment-option">Payment Option</span>
+                            <select name="payment_option" class="course-select" required>
+                                <option value="" disabled selected>Select Payment Option</option>
+                                <option value="full">Full Payment</option>
+                                <option value="installment(50%)">Pay by Installment</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="subdatails">
-                        <div class="subTitle" id="personal-info">
+                    <div class="subdetails">
+                        <div class="subTitle fade visible" id="personal-info">
                             Personal <span style="color: #F64B7D;" id="personal-info-span">Information</span>
                             <hr style="margin-left: 245px;" />
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="full-name">Full Name</span>
+                            <span class="details fade visible" id="full-name">Full Name</span>
                             <input type="text" name="full_name" placeholder="Your full name" required />
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="category">Select the Category</span>
+                            <span class="details fade visible" id="category">Select the Category</span>
                             <select name="category" class="course-select" required>
                                 <option value="" disabled selected>The Category</option>
                                 <option value="freelancer">Freelancer</option>
@@ -69,34 +74,30 @@
                                 <option value="passionate">Passionate</option>
                             </select>
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="email">Email</span>
+                            <span class="details fade visible" id="email">Email</span>
                             <input type="email" name="email" placeholder="email@gmail.com" required />
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="gender">Gender</span>
+                            <span class="details fade visible" id="gender">Gender</span>
                             <select name="gender" class="course-select" required>
                                 <option value="" disabled selected>Gender</option>
                                 <option value="Female">Female</option>
                                 <option value="Male">Male</option>
                             </select>
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="phone-number">Phone Number</span>
+                            <span class="details fade visible" id="phone-number">Phone Number</span>
                             <input type="text" name="phone_number" placeholder="+968 00000000" required />
                         </div>
-
                         <div class="input-box">
-                            <span class="details" id="civil-id">Civil/Resident ID</span>
+                            <span class="details fade visible" id="civil-id">Civil/Resident ID</span>
                             <input type="text" name="civil_id" placeholder="Enter your Civil/Resident ID" required />
                         </div>
                     </div>
                 </div>
                 <div class="button">
-                    <input type="submit" value="Pay to complete the Registration" id="submit-button" />
+                    <input type="submit" value="Pay to complete the Registration" id="submit-button" class="fade visible" />
                 </div>
             </form>
         </div>
@@ -118,6 +119,7 @@
                 gender: "Gender",
                 phoneNumber: "Phone Number",
                 civilId: "Civil/Resident ID",
+                paymentOption: "Payment Option",
                 submitButton: "Pay to complete the Registration",
                 languageLabel: "Language:",
                 placeholders: {
@@ -126,6 +128,10 @@
                     phoneNumber: "+968 00000000",
                     civilId: "Enter your Civil/Resident ID",
                     email: "email@gmail.com"
+                },
+                paymentOptions: {
+                    full: "الدفع الكامل",
+                    installment: "(٥٠٪)الدفع بالتقسيط"
                 }
             },
             ar: {
@@ -142,6 +148,7 @@
                 gender: "الجنس",
                 phoneNumber: "رقم الهاتف",
                 civilId: "الهوية المدنية/الإقامة",
+                paymentOption: "خيار الدفع",
                 submitButton: "ادفع لإكمال التسجيل",
                 languageLabel: "اللغة:",
                 placeholders: {
@@ -154,8 +161,7 @@
             }
         };
 
-        function changeLanguage() {
-            const lang = document.getElementById("language-select").value;
+        function changeLanguage(lang) {
             document.body.setAttribute("lang", lang);
             const languageSelector = document.getElementById("language-selector");
             if (lang === "ar") {
@@ -165,7 +171,6 @@
                 languageSelector.classList.remove("language-selector-left");
                 languageSelector.classList.add("language-selector-right");
             }
-            document.getElementById("language-label").innerText = translations[lang].languageLabel;
             document.getElementById("form-title").innerText = translations[lang].formTitle;
             document.getElementById("course-info").innerHTML = `${translations[lang].courseInfo} <span style="color: #F64B7D;" id="course-info-span">${translations[lang].courseInfoSpan}</span>`;
             document.getElementById("select-course").innerText = translations[lang].selectCourse;
@@ -177,6 +182,7 @@
             document.getElementById("gender").innerText = translations[lang].gender;
             document.getElementById("phone-number").innerText = translations[lang].phoneNumber;
             document.getElementById("civil-id").innerText = translations[lang].civilId;
+            document.getElementById("payment-option").innerText = translations[lang].paymentOption;
             document.getElementById("submit-button").value = translations[lang].submitButton;
 
             // Update input placeholders
@@ -201,7 +207,7 @@
                 <option value="employee">موظف</option>
                 <option value="job_seeker">باحث عن عمل</option>
                 <option value="student">طالب جامعي/كلية</option>
-                <option value="passionate">شغف</option>
+                <option value="passionate">شغوف</option>
             `;
 
             // Update gender options
@@ -215,6 +221,29 @@
                 <option value="Female">أنثى</option>
                 <option value="Male">ذكر</option>
             `;
+
+            // Update payment options
+            const paymentSelect = document.querySelector('select[name="payment_option"]');
+            paymentSelect.innerHTML = lang === "en" ? `
+                <option value="" disabled selected>Select Payment Option</option>
+                <option value="full">Full Payment</option>
+                <option value="installment">Pay by Installment(50%)</option>
+            ` : `
+                <option value="" disabled selected>اختر خيار الدفع</option>
+                <option value="full">الدفع الكامل</option>
+                <option value="installment">(٥٠٪)الدفع بالتقسيط</option>
+            `;
+
+            // Apply fade transition
+            const elements = document.querySelectorAll('.fade');
+            elements.forEach(el => {
+                el.classList.remove('visible');
+                el.classList.add('hidden');
+                setTimeout(() => {
+                    el.classList.remove('hidden');
+                    el.classList.add('visible');
+                }, 500);
+            });
         }
     </script>
 </body>
